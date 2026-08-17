@@ -47,29 +47,94 @@ cd codepilot-cli
 uv sync --locked --dev
 ```
 
-### 2. 配置模型
-
-先复制不含密钥的示例配置：
-
-```powershell
-New-Item -ItemType Directory -Force .codepilot
-Copy-Item config.example.yaml .codepilot/config.yaml
-$env:OPENAI_API_KEY = "your-api-key"
-```
-
-Linux / macOS：
+### 2. 创建配置文件
 
 ```bash
 mkdir -p .codepilot
 cp config.example.yaml .codepilot/config.yaml
-export OPENAI_API_KEY="your-api-key"
 ```
 
-编辑 `.codepilot/config.yaml`，填写实际的 `base_url` 和 `model`。OpenAI-compatible provider 在 `api_key` 为空时读取 `OPENAI_API_KEY`；Anthropic provider 读取 `ANTHROPIC_API_KEY`。
+然后编辑 `.codepilot/config.yaml`，根据你使用的模型协议选择对应配置。
 
-`.codepilot/` 会保存配置、会话、记忆、调试日志和工具结果，已被 Git 忽略。不要把真实密钥写入 `config.example.yaml`、README、测试或截图。
+### 3. 配置模型与 API Key
 
-### 3. 运行
+支持三种协议，**三选一**即可：
+
+**Anthropic（Claude 系列）：**
+
+```yaml
+providers:
+  - name: anthropic
+    protocol: anthropic
+    base_url: https://api.anthropic.com
+    api_key: "sk-ant-..."        # 替换为你的 API Key
+    model: claude-sonnet-4-20250514
+    context_window: 200000
+    max_output_tokens: 8192
+```
+
+**OpenAI（GPT-4o 等）：**
+
+```yaml
+providers:
+  - name: openai
+    protocol: openai
+    base_url: https://api.openai.com/v1
+    api_key: "sk-..."            # 替换为你的 API Key
+    model: gpt-4o
+    context_window: 128000
+    max_output_tokens: 8192
+```
+
+**OpenAI 兼容接口（第三方代理 / 本地模型）：**
+
+```yaml
+providers:
+  - name: openai-compatible
+    protocol: openai-compat
+    base_url: https://your-api-endpoint.com/v1
+    api_key: "your-api-key"
+    model: your-model-name
+    context_window: 128000
+    max_output_tokens: 8192
+```
+
+> `api_key` 留空时，Anthropic 协议自动读取环境变量 `ANTHROPIC_API_KEY`，OpenAI / OpenAI-compat 协议读取 `OPENAI_API_KEY`。推荐将密钥写在配置文件中，不要提交到 Git。
+
+`.codepilot/` 目录保存配置、会话、记忆和日志，已被 `.gitignore` 忽略。不要把真实密钥写入 `config.example.yaml`、README 或截图。
+
+### 4. 配置 MCP（可选）
+
+MCP 让你连接外部工具服务，在 `config.yaml` 中添加：
+
+```yaml
+mcp_servers:
+  - name: context7
+    command: npx
+    args: ["-y", "@upstash/context7-mcp"]
+  - name: remote-server
+    url: "https://your-mcp.example.com/mcp"
+    headers:
+      Authorization: "Bearer your-token"
+```
+
+启动后可通过 `/mcp` 命令查看 MCP 服务连接状态。
+
+### 5. 安装 Skills（可选）
+
+Skills 是可复用的任务模板，安装后自动注册为斜杠命令：
+
+```bash
+# 从 GitHub 安装
+uv run codepilot -p "/skill install https://github.com/user/repo"
+
+# 查看已安装的 Skills
+uv run codepilot -p "/skill list"
+```
+
+也可以手动在 `.codepilot/skills/` 目录下创建 `.md` 文件定义项目专属 Skill。
+
+### 6. 运行
 
 ```bash
 # 交互式 TUI

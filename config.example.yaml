@@ -1,24 +1,64 @@
-# 复制为 .codepilot/config.yaml 后填写；不要把真实密钥提交到 Git。
-# 推荐把密钥放在环境变量中：
-#   PowerShell: $env:OPENAI_API_KEY = "your-api-key"
-#   bash/zsh:   export OPENAI_API_KEY="your-api-key"
+# 复制为 .codepilot/config.yaml 后填写真实信息；不要把密钥提交到 Git。
+#
+# 支持三种协议：
+#   anthropic      — Anthropic API（Claude 系列）
+#   openai         — OpenAI API（GPT-4o 等）
+#   openai-compat  — OpenAI 兼容接口（第三方代理 / 本地模型）
 
+# ============================================================
+# 方式一：Anthropic（取消注释并填写 api_key）
+# ============================================================
+# providers:
+#   - name: anthropic
+#     protocol: anthropic
+#     base_url: https://api.anthropic.com
+#     api_key: "sk-ant-..."          # 或设置环境变量 ANTHROPIC_API_KEY
+#     model: claude-sonnet-4-20250514
+#     context_window: 200000
+#     max_output_tokens: 8192
+
+# ============================================================
+# 方式二：OpenAI（取消注释并填写 api_key）
+# ============================================================
+# providers:
+#   - name: openai
+#     protocol: openai
+#     base_url: https://api.openai.com/v1
+#     api_key: "sk-..."              # 或设置环境变量 OPENAI_API_KEY
+#     model: gpt-4o
+#     context_window: 128000
+#     max_output_tokens: 8192
+
+# ============================================================
+# 方式三：OpenAI 兼容接口（默认示例，按需修改）
+# ============================================================
 providers:
   - name: openai-compatible
     protocol: openai-compat
     base_url: https://api.example.com/v1
-    api_key: ""
+    api_key: ""                     # 留空则从环境变量 OPENAI_API_KEY 读取
     model: your-model-name
     context_window: 128000
     max_output_tokens: 8192
 
 permission_mode: default
 
-# 可选：启用 MCP 服务。
+# ============================================================
+# MCP 服务（可选）：连接外部工具服务
+# ============================================================
 mcp_servers: []
 #  - name: context7
 #    command: npx
 #    args: ["-y", "@upstash/context7-mcp"]
+#  - name: remote-server
+#    url: "https://your-mcp-server.example.com/mcp"
+#    headers:
+#      Authorization: "Bearer ${MCP_TOKEN}"
+
+# ============================================================
+# 项目 Skills（可选）：安装后可动态注册为斜杠命令
+# 安装方式：uv run codepilot -p "/skill install https://github.com/owner/repo"
+# ============================================================
 
 enable_fork: false
 enable_verification_agent: false
