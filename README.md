@@ -132,7 +132,12 @@ uv run codepilot -p "/skill install https://github.com/user/repo"
 uv run codepilot -p "/skill list"
 ```
 
-也可以手动在 `.codepilot/skills/` 目录下创建 `.md` 文件定义项目专属 Skill。
+也可以手动创建 Skill 文件，支持两个目录（优先级从高到低）：
+
+- **项目目录** `{项目根}/.codepilot/skills/` — 跟随项目，可提交到 Git，团队共享
+- **用户目录** `~/.codepilot/skills/` — 全局生效，适用于所有项目
+
+同名的 Skill 项目目录优先于用户目录。支持 `.md` 单文件或 `skill.yaml + prompt.md` 两种格式。
 
 ### 6. 运行
 
@@ -164,7 +169,7 @@ uv run codepilot --remote
 | `/rewind` | 回退文件历史快照 |
 | `/memory` | 查看或管理长期记忆 |
 | `/mcp` | 查看 MCP 服务状态 |
-| `/skill` | 管理项目 Skills |
+| `/skill` | 管理项目与用户 Skills |
 | `/worktree` | 管理隔离工作树 |
 | `/tasks`、`/trace` | 查看后台任务与 Agent 调用链 |
 
