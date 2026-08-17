@@ -2,6 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![MCP](https://img.shields.io/badge/MCP-2.x-6f42c1)](https://modelcontextprotocol.io/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 CodePilot 是一个运行在终端中的 AI 编程助手。它将流式对话、文件与命令工具、权限控制、会话恢复、长期记忆、MCP、Skills、子 Agent 和 Git Worktree 集成在一个 Textual TUI 中，也支持非交互脚本和本地浏览器界面。
 
