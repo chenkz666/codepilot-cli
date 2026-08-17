@@ -1,7 +1,6 @@
 # CodePilot CLI
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![CI](https://github.com/chenkz666/codepilot-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/chenkz666/codepilot-cli/actions/workflows/ci.yml)
 [![MCP](https://img.shields.io/badge/MCP-2.x-6f42c1)](https://modelcontextprotocol.io/)
 
 CodePilot 是一个运行在终端中的 AI 编程助手。它将流式对话、文件与命令工具、权限控制、会话恢复、长期记忆、MCP、Skills、子 Agent 和 Git Worktree 集成在一个 Textual TUI 中，也支持非交互脚本和本地浏览器界面。
@@ -144,19 +143,11 @@ uv run pytest -q
 uv build
 ```
 
-CI 会在 Python 3.11 和 3.12 上执行静态检查、完整测试与构建。安全审计可额外运行：
-
-```bash
-uvx pip-audit --path .venv/Lib/site-packages
-uvx bandit -r codepilot -q
-```
-
 ## 安全
 
 - Remote UI 默认仅监听 `127.0.0.1`。只有在可信网络并配置额外访问控制时才使用 `--remote-host 0.0.0.0`。
 - Hook、MCP 服务和 Skills 都可能执行外部程序；只安装和启用可信来源。
 - 如果密钥曾进入提交历史，仅加入 `.gitignore` 不够：请先撤销/轮换密钥，再清理 Git 历史。
-- 漏洞报告与安全边界见 [SECURITY.md](SECURITY.md)。
 
 ## Roadmap
 
