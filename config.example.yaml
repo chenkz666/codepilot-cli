@@ -1,0 +1,31 @@
+# 复制为 .codepilot/config.yaml 后填写；不要把真实密钥提交到 Git。
+# 推荐把密钥放在环境变量中：
+#   PowerShell: $env:OPENAI_API_KEY = "your-api-key"
+#   bash/zsh:   export OPENAI_API_KEY="your-api-key"
+
+providers:
+  - name: openai-compatible
+    protocol: openai-compat
+    base_url: https://api.example.com/v1
+    api_key: ""
+    model: your-model-name
+    context_window: 128000
+    max_output_tokens: 8192
+
+permission_mode: default
+
+# 可选：启用 MCP 服务。
+mcp_servers: []
+#  - name: context7
+#    command: npx
+#    args: ["-y", "@upstash/context7-mcp"]
+
+enable_fork: false
+enable_verification_agent: false
+enable_coordinator_mode: false
+teammate_mode: ""
+
+sandbox:
+  enabled: false
+  auto_allow: false
+  network_enabled: false

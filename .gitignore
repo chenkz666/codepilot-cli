@@ -1,0 +1,47 @@
+# CodePilot 本地状态与凭据
+.codepilot/
+config.yaml
+config.local.yaml
+**/config.local.yaml
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.yaml
+secrets*.yml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# 构建产物
+dist/
+build/
+*.whl
+
+# 日志与临时文件
+*.log
+*.tmp
+*.swp
+
+# 编辑器与系统文件
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
